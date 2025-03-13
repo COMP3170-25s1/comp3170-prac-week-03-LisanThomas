@@ -30,6 +30,13 @@ public class Scene {
 	private int colourBuffer;
 
 	private Shader shader;
+	
+	private Matrix4f modelMatrix = new Matrix4f();
+	private Matrix4f transMatrix = new Matrix4f();
+	private Matrix4f rotMatrix = new Matrix4f();
+	private Matrix4f scalMatrix = new Matrix4f();
+	
+	private float rotation = (float) Math.toRadians(-90);
 
 	public Scene() {
 
@@ -78,6 +85,7 @@ public class Scene {
 
 		indexBuffer = GLBuffers.createIndexBuffer(indices);
 
+		rotationMatrix(rotation, modelMatrix);
 	}
 
 	public void draw() {
@@ -86,6 +94,7 @@ public class Scene {
 		// set the attributes
 		shader.setAttribute("a_position", vertexBuffer);
 		shader.setAttribute("a_colour", colourBuffer);
+		shader.setUniform("u_modelMatrix", modelMatrix);
 
 		// draw using index buffer
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
@@ -135,7 +144,15 @@ public class Scene {
 	public static Matrix4f rotationMatrix(float angle, Matrix4f dest) {
 
 		// TODO: Your code here
-
+		//        [ cos(a) -sin(a) 0 0 ]
+		// R(a) = [ sin(a)  cos(a) 0 0 ]
+		//        [      0       0 0 0 ]
+		//        [      0       0 0 1 ]
+		
+		dest.m00((float) Math.cos(angle));
+		dest.m01((float) Math.sin(angle));
+		dest.m10((float) Math.sin(-angle));
+		dest.m11((float) Math.cos(angle));
 		return dest;
 	}
 
@@ -152,6 +169,14 @@ public class Scene {
 	public static Matrix4f scaleMatrix(float sx, float sy, Matrix4f dest) {
 
 		// TODO: Your code here
+		//           [ sx  0 0 0 ]
+		// S(sx,sy)= [ 0  sy 0 0 ]
+		//           [ 0   0 0 0 ]
+		//           [ 0   0 0 1 ]
+		
+		
+		dest.m00(sx);
+		dest.m11(sy);
 
 		return dest;
 	}
