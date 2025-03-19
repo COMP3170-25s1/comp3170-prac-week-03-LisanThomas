@@ -38,6 +38,11 @@ public class Scene {
 	private Matrix4f rotMatrix = new Matrix4f();
 	private Matrix4f scalMatrix = new Matrix4f();
 	
+	final private Vector3f OFFSET = new Vector3f(0.0f, 0.3f, 0.1f);
+	final private float MOVEMENT_SPEED = 1.5f;
+	final private float SCALE = 0.1f;
+	final private float ROTATION_RATE = TAU/10;
+	
 
 	public Scene() {
 
@@ -91,12 +96,26 @@ public class Scene {
 //		translationMatrix(0.5f, -0.5f, transMatrix);	// MODEL MATRIX c
 //		scaleMatrix(0.5f, 0.5f, scalMatrix);			// MODEL MATRIX c
 		
-		translationMatrix(-0.7f, 0.7f, transMatrix); 	// MODEL MATRIX d
-		rotationMatrix(TAU/8, rotMatrix);			// MODEL MATRIX d
-		scaleMatrix(0.41f, 0.41f, scalMatrix);			// MODEL MATRIX d
+//		translationMatrix(-0.7f, 0.7f, transMatrix); 	// MODEL MATRIX d
+//		rotationMatrix(TAU/8, rotMatrix);			// MODEL MATRIX d
+//		scaleMatrix(0.41f, 0.41f, scalMatrix);			// MODEL MATRIX d
+//		
+//		modelMatrix.mul(transMatrix).mul(rotMatrix).mul(scalMatrix);
 		
-		modelMatrix.identity();
-		modelMatrix.mul(transMatrix).mul(rotMatrix).mul(scalMatrix);
+//		Vector3f offset = new Vector3f(-0.7f, 0.7f, 0f);
+//		float scale = 0.41f;
+//		float rotation = TAU/8;
+		
+		// Using joml methods:
+//		modelMatrix.translate(offset).rotateZ(rotation).scale(scale); 
+		
+		modelMatrix.translate(OFFSET).scale(SCALE);
+	}
+	
+	public void update(float deltaTime) {
+		float movement = MOVEMENT_SPEED * deltaTime;
+		float rotation = ROTATION_RATE * deltaTime;
+		modelMatrix.translate(0.0f, movement, 0.0f).rotateZ(rotation);
 	}
 
 	public void draw() {
@@ -114,6 +133,8 @@ public class Scene {
 		glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
 
 	}
+	
+	
 
 	/**
 	 * Set the destination matrix to a translation matrix. Note the destination
