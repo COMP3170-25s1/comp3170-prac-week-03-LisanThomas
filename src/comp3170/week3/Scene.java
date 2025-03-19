@@ -10,6 +10,7 @@ import static org.lwjgl.opengl.GL11.glPolygonMode;
 import static org.lwjgl.opengl.GL15.glBindBuffer;
 
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -84,18 +85,18 @@ public class Scene {
 			// @formatter:on
 
 		indexBuffer = GLBuffers.createIndexBuffer(indices);
-
-//		rotationMatrix(TAU/4, modelMatrix); // MODEL MATRIX b
 		
-//		translationMatrix(0.5f, -0.5f, modelMatrix);	// MODEL MATRIX c
-//		scaleMatrix(0.5f, 0.5f, modelMatrix);			// MODEL MATRIX c
+//		rotationMatrix(-TAU/4, rotMatrix); // MODEL MATRIX b
 		
+//		translationMatrix(0.5f, -0.5f, transMatrix);	// MODEL MATRIX c
+//		scaleMatrix(0.5f, 0.5f, scalMatrix);			// MODEL MATRIX c
 		
-		translationMatrix(-0.7f, 0.7f, modelMatrix); 	// MODEL MATRIX d
-		rotationMatrix(TAU/20, modelMatrix);			// MODEL MATRIX d
-		scaleMatrix(0.3f, 0.3f, modelMatrix);			// MODEL MATRIX d
+		translationMatrix(-0.7f, 0.7f, transMatrix); 	// MODEL MATRIX d
+		rotationMatrix(TAU/8, rotMatrix);			// MODEL MATRIX d
+		scaleMatrix(0.41f, 0.41f, scalMatrix);			// MODEL MATRIX d
 		
-		
+		modelMatrix.identity();
+		modelMatrix.mul(transMatrix).mul(rotMatrix).mul(scalMatrix);
 	}
 
 	public void draw() {
