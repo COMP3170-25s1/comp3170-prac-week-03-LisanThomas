@@ -38,9 +38,9 @@ public class Plane {
 	private Matrix4f rotMatrix = new Matrix4f();
 	private Matrix4f scalMatrix = new Matrix4f();
 	
-//	final private Vector3f OFFSET = new Vector3f(0.5f, 0.5f, 0.1f);
-	final private float MOVEMENT_SPEED = 3.0f;
-//	final private float SCALE = 0.1f;
+	final private Vector3f OFFSET = new Vector3f(0.5f, 0.0f, 0.0f);
+	final private float MOVEMENT_SPEED = 2.5f;
+	final private float SCALE = 0.1f;
 	final private float ROTATION_RATE = TAU/15;
 	
 
@@ -109,10 +109,10 @@ public class Plane {
 		// Using joml methods:
 //		modelMatrix.translate(offset).rotateZ(rotation).scale(scale); 
 		
-//		modelMatrix.translate(OFFSET).scale(SCALE);
+//		translationMatrix(0.7f, 0.0f, modelMatrix);
+//		scaleMatrix(0.1f, 0.1f, modelMatrix);
 		
-		translationMatrix(0.7f, 0.0f, modelMatrix);
-		scaleMatrix(0.1f, 0.1f, modelMatrix);
+		modelMatrix.translate(OFFSET).scale(SCALE);
 	}
 	
 	public void update(float deltaTime) {
